@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Barlow_Semi_Condensed } from "next/font/google";
 import "./globals.css";
+import GameContextProvider from "@/contexts/GameContextProvider";
 
 const barlow = Barlow_Semi_Condensed({
   subsets: ["latin"],
@@ -19,7 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={barlow.className}>{children}</body>
+      <GameContextProvider>
+        {[<body className={barlow.className}>{children}</body>]}
+      </GameContextProvider>
     </html>
   );
 }
