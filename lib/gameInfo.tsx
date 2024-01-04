@@ -1,4 +1,13 @@
-export const playerTypes = {
+import { ReactNode } from "react";
+
+type PlayerTypes = {
+  [key: string]: {
+    svg: ReactNode;
+    name: string;
+  };
+};
+
+export const playerTypes: PlayerTypes = {
   paper: {
     svg: (
       <svg xmlns="http://www.w3.org/2000/svg" width="49" height="59">

@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GameContextProvider>
-        {[<body className={barlow.className}>{children}</body>]}
+        <body className={barlow.className}>{children}</body>
       </GameContextProvider>
     </html>
   );

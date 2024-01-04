@@ -54,7 +54,7 @@ export const GameContext = createContext<GameContext>({
   setWinner: () => {},
 });
 
-type GameContextProviderProps = { children: ReactNode[] };
+type GameContextProviderProps = { children: ReactNode };
 
 const GameContextProvider = ({ children }: GameContextProviderProps) => {
   const [gameMode, setGameMode] = useState<"easy" | "hard">("easy");
