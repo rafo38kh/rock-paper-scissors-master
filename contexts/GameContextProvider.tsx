@@ -8,11 +8,11 @@ import {
   SetStateAction,
 } from "react";
 
-export enum EasyMode {
-  rock = "rock",
-  paper = "paper",
-  scissors = "scissors",
-}
+// export enum EasyMode {
+//   rock = "rock",
+//   paper = "paper",
+//   scissors = "scissors",
+// }
 
 export enum HardMode {
   rock = "rock",
@@ -22,66 +22,79 @@ export enum HardMode {
   spock = "spock",
 }
 
-export type CPUType = {
-  svg: ReactNode;
-  name: string;
-};
+// export type CPUType = {
+//   svg: ReactNode;
+//   name: string;
+// };
 
 type GameContext = {
   gameMode: "easy" | "hard";
   setGameMode: Dispatch<SetStateAction<"easy" | "hard">>;
-  // playerType: EasyMode | HardMode | null;
-  playerType: string;
-  // setPlayerType: Dispatch<SetStateAction<EasyMode | HardMode | null>>;
-  setPlayerType: Dispatch<SetStateAction<string>>;
-  cpuType: CPUType | null;
-  setCpuType: Dispatch<SetStateAction<CPUType | null>>;
+  player: string;
+  setPlayer: Dispatch<SetStateAction<string>>;
+  cpu: string;
+  setCpu: Dispatch<SetStateAction<string>>;
   winner: "user" | "cpu" | null;
   setWinner: Dispatch<SetStateAction<"user" | "cpu" | null>>;
+  isModalOpend: true | false;
+  setIsModalOpend: Dispatch<SetStateAction<true | false>>;
+  score: number;
+  setScore: Dispatch<SetStateAction<number>>;
 };
 
 export const GameContext = createContext<GameContext>({
   gameMode: "easy",
   setGameMode: () => {},
-  playerType: "",
-  setPlayerType: () => {},
-  cpuType: {
-    svg: null,
-    name: "",
-  },
-  setCpuType: () => {},
+  player: "",
+  setPlayer: () => {},
+  cpu: "",
+  setCpu: () => {},
   winner: null,
   setWinner: () => {},
+  isModalOpend: false,
+  setIsModalOpend: () => {},
+  score: 0,
+  setScore: () => {},
 });
 
-type GameContextProviderProps = { children: ReactNode };
+type GameContextProviderProps = { children: ReactNode | ReactNode[] };
 
 const GameContextProvider = ({ children }: GameContextProviderProps) => {
+  const [cpu, setCpu] = useState("");
+  const [player, setPlayer] = useState("");
   const [gameMode, setGameMode] = useState<"easy" | "hard">("easy");
-  const [playerType, setPlayerType] = useState("");
-  const [cpuType, setCpuType] = useState<CPUType | null>(null);
   const [winner, setWinner] = useState<"user" | "cpu" | null>(null);
+  const [isModalOpend, setIsModalOpend] = useState(Boolean);
+  const [score, setScore] = useState(0);
 
   const value = useMemo(
     () => ({
       gameMode,
       setGameMode,
-      playerType,
-      setPlayerType,
-      cpuType,
-      setCpuType,
+      player,
+      setPlayer,
+      cpu,
+      setCpu,
       winner,
       setWinner,
+      isModalOpend,
+      setIsModalOpend,
+      score,
+      setScore,
     }),
     [
       gameMode,
       setGameMode,
-      playerType,
-      setPlayerType,
-      cpuType,
-      setCpuType,
+      player,
+      setPlayer,
+      cpu,
+      setCpu,
       winner,
       setWinner,
+      isModalOpend,
+      setIsModalOpend,
+      score,
+      setScore,
     ]
   );
 

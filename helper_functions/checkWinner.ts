@@ -1,27 +1,47 @@
-import { CPUType } from "@/contexts/GameContextProvider";
+export const checkWinner = (
+  playerType: string,
+  cpuType: string
+): "user" | "cpu" | null => {
+  if (!playerType) return null;
 
-export const checkWinner = (playerType: string, cpuType: CPUType | null) => {
-  if (playerType === "paper" && cpuType?.name === "rock") {
+  // const winningCombinations: Record<string, string[]> = {
+  //   paper: ["rock", "spock"],
+  //   rock: ["scissors", "lizard"],
+  //   lizard: ["spock", "paper"],
+  //   spock: ["scissors", "rock"],
+  //   scissors: ["paper", "lizard"],
+  // };
+
+  // const winner = winningCombinations[playerType]?.includes(cpuType)
+  //   ? "cpu"
+  //   : "user";
+
+  if (playerType === "paper" && cpuType === "rock") {
     return "user";
-  } else if (playerType === "paper" && cpuType?.name === "spock") {
+  } else if (playerType === "paper" && cpuType === "spock") {
     return "user";
-  } else if (playerType === "rock" && cpuType?.name === "scissors") {
+  } else if (playerType === "rock" && cpuType === "scissors") {
     return "user";
-  } else if (playerType === "rock" && cpuType?.name === "lizard") {
+  } else if (playerType === "rock" && cpuType === "lizard") {
     return "user";
-  } else if (playerType === "lizard" && cpuType?.name === "spock") {
+  } else if (playerType === "lizard" && cpuType === "spock") {
     return "user";
-  } else if (playerType === "lizard" && cpuType?.name === "paper") {
+  } else if (playerType === "lizard" && cpuType === "paper") {
     return "user";
-  } else if (playerType === "spock" && cpuType?.name === "scissors") {
+  } else if (playerType === "spock" && cpuType === "scissors") {
     return "user";
-  } else if (playerType === "spock" && cpuType?.name === "rock") {
+  } else if (playerType === "spock" && cpuType === "rock") {
     return "user";
-  } else if (playerType === "scissors" && cpuType?.name === "paper") {
+  } else if (playerType === "scissors" && cpuType === "paper") {
     return "user";
-  } else if (playerType === "scissors" && cpuType?.name === "lizard") {
+  } else if (playerType === "scissors" && cpuType === "lizard") {
     return "user";
   } else {
     return "cpu";
   }
+
+  // console.log("winner", winner);
+
+  // return winner;
+  // return winningCombinations[playerType]?.includes(cpuType) ? "user" : "cpu";
 };

@@ -1,76 +1,129 @@
 "use client";
-
+import Image from "next/image";
 import React, { useContext, useEffect } from "react";
 
-import { EasyMode, GameContext } from "@/contexts/GameContextProvider";
+import { GameContext } from "@/contexts/GameContextProvider";
 
 import { playerTypes } from "@/lib/gameInfo";
 import { getRandomPlayerTypeCPU } from "@/helper_functions/getRandomPlayerTypeCPU";
 import { checkWinner } from "@/helper_functions/checkWinner";
+import Modal from "./Modal";
+
+import easyIcon from "@/public/images/logo.svg";
+import hardIcon from "@/public/images/logo-bonus.svg";
 
 export default function GamePage() {
   const {
     gameMode,
     setGameMode,
-    playerType,
-    setPlayerType,
-    cpuType,
-    setCpuType,
+    player,
+    setPlayer,
+    cpu,
+    setCpu,
     winner,
     setWinner,
+    isModalOpend,
+    setIsModalOpend,
+    score,
+    setScore,
   } = useContext(GameContext);
 
   useEffect(() => {
-    const randomType = getRandomPlayerTypeCPU(playerType);
-    setCpuType(randomType);
+    setCpu(getRandomPlayerTypeCPU(player));
+    const winner = checkWinner(player, cpu);
+    if (winner !== null) setWinner(winner);
+    console.log("winner", winner);
+  }, [player]);
 
-    setWinner(checkWinner(playerType, cpuType));
-    // setTimeout(() => {}, 500);
-  }, [playerType]);
+  useEffect(() => {
+    if (winner === "user") {
+      setScore((prevState) => prevState + 1);
+    }
+  }, [winner]);
 
-  console.log("winner", winner);
+  console.log(winner);
 
   const handleResetButton = () => {
-    setPlayerType("");
-    setCpuType(null);
+    setCpu("");
+    setPlayer("");
     setWinner(null);
   };
 
   return (
     <div className="flex flex-col gap-4">
-      <button onClick={() => setGameMode("easy")}>Easy</button>
-      <button onClick={() => setGameMode("hard")}>Difficult</button>
+      <div className="flex justify-between items-center p-6 rounded-md border">
+        {gameMode === "easy" ? (
+          <Image src={easyIcon} alt="Icon" height={40} width={40} />
+        ) : (
+          <Image src={hardIcon} alt="Icon" height={40} width={40} />
+        )}
 
-      {!playerType ? (
+        <div className="flex flex-col justify-center items-center  p-2 bg-red-600 rounded-md">
+          <span>Score</span>
+          <span>{score}</span>
+        </div>
+      </div>
+
+      <div>
+        <button onClick={() => setGameMode("easy")}>Easy</button>
+        <button onClick={() => setGameMode("hard")}>Difficult</button>
+      </div>
+
+      {!player ? (
         <div>
-          <button onClick={() => setPlayerType(EasyMode.paper)}>
-            {playerTypes.paper.svg}
-          </button>
-          <button onClick={() => setPlayerType(EasyMode.scissors)}>
-            {playerTypes.scissors.svg}
-          </button>
-          <button onClick={() => setPlayerType(EasyMode.rock)}>
-            {playerTypes.rock.svg}
-          </button>
+          {gameMode === "easy" ? (
+            <div>
+              <button onClick={() => setPlayer("paper")}>
+                {playerTypes.paper.svg}
+              </button>
+              <button onClick={() => setPlayer("scissors")}>
+                {playerTypes.scissors.svg}
+              </button>
+              <button onClick={() => setPlayer("rock")}>
+                {playerTypes.rock.svg}
+              </button>
+            </div>
+          ) : gameMode === "hard" ? (
+            <div>
+              <button onClick={() => setPlayer("paper")}>
+                {playerTypes.paper.svg}
+              </button>
+              <button onClick={() => setPlayer("scissors")}>
+                {playerTypes.scissors.svg}
+              </button>
+              <button onClick={() => setPlayer("rock")}>
+                {playerTypes.rock.svg}
+              </button>
+              <button onClick={() => setPlayer("spock")}>
+                {playerTypes.spock.svg}
+              </button>
+              <button onClick={() => setPlayer("lizard")}>
+                {playerTypes.lizard.svg}
+              </button>
+            </div>
+          ) : null}
         </div>
       ) : (
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-col justify-start items-center gap-2">
             <span>You picked</span>
-            <span>{playerTypes[playerType].svg}</span>
+            {playerTypes[player]?.svg}
           </div>
 
           <div className="flex flex-col justify-center items-center gap-2">
-            <span>{winner === "user" ? "YOU WIN" : "YOU LOSE"}</span>
+            {winner && winner === "user" && <span>you win</span>}
+            {winner && winner === "cpu" && <span>you lose</span>}
             <button onClick={() => handleResetButton()}>play again</button>
           </div>
 
           <div className="flex flex-col justify-start items-center gap-2">
             <span>THE HOUSE PICKED</span>
-            <span>{cpuType?.svg}</span>
+            {playerTypes[cpu]?.svg}
           </div>
         </div>
       )}
+      <button onClick={() => setIsModalOpend(true)}>Rules</button>
+      {isModalOpend && <Modal />}
     </div>
   );
 }

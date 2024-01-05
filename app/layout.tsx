@@ -20,9 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <GameContextProvider>
-        <body className={barlow.className}>{children}</body>
-      </GameContextProvider>
+      <body className={barlow.className}>
+        <GameContextProvider>{children}</GameContextProvider>
+      </body>
     </html>
   );
 }

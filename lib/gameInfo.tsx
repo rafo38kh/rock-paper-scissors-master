@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-type PlayerTypes = {
+export type PlayerTypes = {
   [key: string]: {
     svg: ReactNode;
     name: string;
