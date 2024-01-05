@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React, { useContext, useEffect } from "react";
 
 import { GameContext } from "@/contexts/GameContextProvider";
@@ -7,10 +6,9 @@ import { GameContext } from "@/contexts/GameContextProvider";
 import { playerTypes } from "@/lib/gameInfo";
 import { getRandomPlayerTypeCPU } from "@/helper_functions/getRandomPlayerTypeCPU";
 import { checkWinner } from "@/helper_functions/checkWinner";
-import Modal from "./Modal";
 
-import easyIcon from "@/public/images/logo.svg";
-import hardIcon from "@/public/images/logo-bonus.svg";
+import Modal from "./Modal";
+import Score from "./Score";
 
 export default function GamePage() {
   const {
@@ -51,19 +49,7 @@ export default function GamePage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between items-center p-6 rounded-md border">
-        {gameMode === "easy" ? (
-          <Image src={easyIcon} alt="Icon" height={40} width={40} />
-        ) : (
-          <Image src={hardIcon} alt="Icon" height={40} width={40} />
-        )}
-
-        <div className="flex flex-col justify-center items-center  p-2 bg-red-600 rounded-md">
-          <span>Score</span>
-          <span>{score}</span>
-        </div>
-      </div>
-
+      <Score />
       <div>
         <button onClick={() => setGameMode("easy")}>Easy</button>
         <button onClick={() => setGameMode("hard")}>Difficult</button>
