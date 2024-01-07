@@ -8,11 +8,20 @@ export default function Modal({}) {
   const { setIsModalOpend, gameMode } = useContext(GameContext);
 
   return (
-    <div className="h-screen w-full fixed inset-0 bg-black/50 flex flex-col justify-center items-center">
-      <div className="bg-white backdrop-blur-md w-full flex flex-col justify-center items-center gap-6 px-8 py-14 ">
-        <div className="flex flex-row items-center justify-between w-full">
-          <span>Rules</span>
-          <button onClick={() => setIsModalOpend(false)}>X</button>
+    <div className="fixed inset-0 flex h-screen w-full flex-col items-center justify-center bg-black/50 px-4">
+      <div className="flex w-full max-w-96 flex-col items-center justify-center gap-6 rounded-md bg-white px-8 py-14 backdrop-blur-md">
+        <div className="flex w-full flex-row items-center justify-between">
+          <span className="text-3xl font-bold uppercase">Rules</span>
+          <button onClick={() => setIsModalOpend(false)}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+              <path
+                fill="#3B4262"
+                fillRule="evenodd"
+                d="M16.97 0l2.122 2.121-7.425 7.425 7.425 7.425-2.121 2.12-7.425-7.424-7.425 7.425L0 16.97l7.425-7.425L0 2.121 2.121 0l7.425 7.425L16.971 0z"
+                opacity=".25"
+              />
+            </svg>
+          </button>
         </div>
         {gameMode === "easy" ? (
           <svg xmlns="http://www.w3.org/2000/svg" width="304" height="270">
