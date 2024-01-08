@@ -54,8 +54,6 @@ export default function GamePage() {
     setWinner(null);
   };
 
-  // console.log("player types", Object.keys(playerTypes).slice(0, 3));
-
   return (
     <div className="m-auto flex h-screen max-w-[43.75rem] flex-col justify-between p-8">
       <Score />
@@ -93,36 +91,6 @@ export default function GamePage() {
                   }`}
                 />
               ))}
-              {/* <button
-                className="col-span-2 flex aspect-square w-36 scale-75 items-center justify-center rounded-full  border-[20px] border-solid border-[#4865F4] bg-white"
-                onClick={() => setPlayer("paper")}
-              >
-                {playerTypes.paper.svg}
-              </button>
-              <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-start rounded-full border-[20px]  border-solid border-[#EC9E0E] bg-white "
-                onClick={() => setPlayer("scissors")}
-              >
-                {playerTypes.scissors.svg}
-              </button>
-              <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-end rounded-full border-[20px]  border-solid border-[#DC2E4E] bg-white "
-                onClick={() => setPlayer("rock")}
-              >
-                {playerTypes.rock.svg}
-              </button>
-              <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-end rounded-full border-[20px]  border-solid border-[#40B9CE] bg-white "
-                onClick={() => setPlayer("spock")}
-              >
-                {playerTypes.spock.svg}
-              </button>
-              <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-start  rounded-full border-[20px]  border-solid border-[#834FE3] bg-white "
-                onClick={() => setPlayer("lizard")}
-              >
-                {playerTypes.lizard.svg}
-              </button> */}
             </div>
           ) : null}
         </div>
