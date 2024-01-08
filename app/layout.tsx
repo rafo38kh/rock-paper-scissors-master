@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Barlow_Semi_Condensed } from "next/font/google";
 import "./globals.css";
+import GameContextProvider from "@/contexts/GameContextProvider";
 
 const barlow = Barlow_Semi_Condensed({
   subsets: ["latin"],
@@ -19,7 +20,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={barlow.className}>{children}</body>
+      <body
+        className={`${barlow.className} min-h-screen bg-gradient-to-b from-[#1F3756] to-[#141539] bg-cover bg-no-repeat`}
+      >
+        <GameContextProvider>{children}</GameContextProvider>
+      </body>
     </html>
   );
 }
