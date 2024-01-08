@@ -12,17 +12,21 @@ export default function Score() {
 
   return (
     <div className="flex items-center justify-between rounded-md border-[3px] border-solid border-[#606E85] p-3">
-      {gameMode === "easy" ? (
-        <Image src={easyIcon} alt="Icon" height={80} width={80} />
-      ) : (
-        <Image src={hardIcon} alt="Icon" height={60} width={70} />
-      )}
+      <div className="h-full">
+        {gameMode === "easy" ? (
+          <Image src={easyIcon} alt="Icon" layout="responsive" />
+        ) : (
+          <Image src={hardIcon} alt="Icon" layout="responsive" />
+        )}
+      </div>
 
-      <div className="flex flex-col items-center justify-center  rounded-md bg-white px-6 py-3">
-        <span className="text-[.625rem] font-semibold uppercase tracking-widest text-[#2A46C0]">
+      <div className="flex h-full flex-col items-center justify-center rounded-md bg-white px-6 py-3 md:px-12">
+        <span className="text-[.625rem] font-semibold uppercase tracking-widest text-[#2A46C0] md:text-sm">
           Score
         </span>
-        <span className="text-4xl font-bold text-[#3B4363]">{score}</span>
+        <span className="text-4xl font-bold text-[#3B4363] md:text-[46px]">
+          {score}
+        </span>
       </div>
     </div>
   );

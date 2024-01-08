@@ -10,6 +10,7 @@ import Modal from "./Modal";
 import Score from "./Score";
 
 import { playerTypes } from "@/lib/gameInfo";
+import Button from "./Button";
 
 export default function GamePage() {
   const {
@@ -29,7 +30,7 @@ export default function GamePage() {
   useEffect(() => {
     if (player) {
       setTimeout(() => {
-        const cpuType = getRandomPlayerTypeCPU(player);
+        const cpuType = getRandomPlayerTypeCPU(player, gameMode);
 
         const winner = checkWinner(player, cpuType);
 
@@ -53,65 +54,75 @@ export default function GamePage() {
     setWinner(null);
   };
 
+  // console.log("player types", Object.keys(playerTypes).slice(0, 3));
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="m-auto flex h-screen max-w-[43.75rem] flex-col justify-between p-8">
       <Score />
 
       {!player ? (
         <div>
           {gameMode === "easy" ? (
-            <div className="grid grid-cols-2 grid-rows-2 place-items-center">
-              <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center rounded-full border-[15px]  border-solid border-[#4865F4] bg-white p-8"
-                onClick={() => handlePlayerSelection("paper")}
-              >
-                {playerTypes.paper.svg}
-              </button>
-              <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center rounded-full border-[15px]  border-solid border-[#EC9E0E] bg-white p-8"
-                onClick={() => handlePlayerSelection("scissors")}
-              >
-                {playerTypes.scissors.svg}
-              </button>
-              <button
-                className="col-span-2 flex aspect-square w-36 scale-75 items-center justify-center rounded-full  border-[15px] border-solid border-[#DC2E4E] bg-white p-8"
-                onClick={() => handlePlayerSelection("rock")}
-              >
-                {playerTypes.rock.svg}
-              </button>
+            <div className="m-auto grid max-w-96 grid-cols-2 grid-rows-2 place-items-center gap-3 md:max-w-[30rem]">
+              {Object.keys(playerTypes)
+                .slice(0, 3)
+                .map((playerType) => (
+                  <Button
+                    key={playerType}
+                    playerType={playerType}
+                    handlePlayerSelection={handlePlayerSelection}
+                    className={playerType === "rock" ? "col-span-2" : null}
+                  />
+                ))}
             </div>
           ) : gameMode === "hard" ? (
-            <div className="grid grid-cols-2 grid-rows-3 place-items-center">
-              <button
-                className="col-span-2 flex aspect-square w-36 scale-75 items-center justify-center rounded-full  border-[15px] border-solid border-[#4865F4] bg-white   p-8"
+            <div className="m-auto  grid max-w-96 grid-cols-2 grid-rows-3 place-items-center gap-8 md:max-w-[30rem]">
+              {Object.keys(playerTypes).map((playerType) => (
+                <Button
+                  key={playerType}
+                  playerType={playerType}
+                  handlePlayerSelection={handlePlayerSelection}
+                  className={`${
+                    playerType === "paper"
+                      ? "col-span-2 justify-self-center"
+                      : null
+                  } ${
+                    playerType === "scissors" || playerType === "lizard"
+                      ? "justify-self-start"
+                      : "justify-self-end"
+                  }`}
+                />
+              ))}
+              {/* <button
+                className="col-span-2 flex aspect-square w-36 scale-75 items-center justify-center rounded-full  border-[20px] border-solid border-[#4865F4] bg-white"
                 onClick={() => setPlayer("paper")}
               >
                 {playerTypes.paper.svg}
               </button>
               <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-start rounded-full border-[15px]  border-solid border-[#EC9E0E] bg-white p-8"
+                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-start rounded-full border-[20px]  border-solid border-[#EC9E0E] bg-white "
                 onClick={() => setPlayer("scissors")}
               >
                 {playerTypes.scissors.svg}
               </button>
               <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-end rounded-full border-[15px]  border-solid border-[#DC2E4E] bg-white p-8"
+                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-end rounded-full border-[20px]  border-solid border-[#DC2E4E] bg-white "
                 onClick={() => setPlayer("rock")}
               >
                 {playerTypes.rock.svg}
               </button>
               <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-end rounded-full border-[15px]  border-solid border-[#40B9CE] bg-white p-8"
+                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-end rounded-full border-[20px]  border-solid border-[#40B9CE] bg-white "
                 onClick={() => setPlayer("spock")}
               >
                 {playerTypes.spock.svg}
               </button>
               <button
-                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-start  rounded-full border-[15px]  border-solid border-[#834FE3] bg-white p-8"
+                className="flex aspect-square w-36 scale-75 items-center justify-center justify-self-start  rounded-full border-[20px]  border-solid border-[#834FE3] bg-white "
                 onClick={() => setPlayer("lizard")}
               >
                 {playerTypes.lizard.svg}
-              </button>
+              </button> */}
             </div>
           ) : null}
         </div>
@@ -119,7 +130,7 @@ export default function GamePage() {
         <div className="grid grid-cols-2 grid-rows-2">
           <div className="flex flex-col items-center justify-start gap-2">
             <span
-              className={`aspect-square scale-75 rounded-full border-[10px] border-solid  bg-white p-8 border-[${playerTypes[player]?.firstColor}] w-36`}
+              className={`flex aspect-square items-center justify-center rounded-full border-[20px] border-solid  bg-white border-[${playerTypes[player]?.firstColor}] w-36`}
             >
               {playerTypes[player]?.svg}
             </span>
@@ -149,7 +160,7 @@ export default function GamePage() {
 
           <div className="col-start-2 row-start-1 flex flex-col items-center justify-start gap-2">
             <span
-              className={` aspect-square w-36 scale-75 rounded-full border-[10px] border-solid  bg-white p-8 border-[${playerTypes[cpu]?.firstColor}]`}
+              className={`flex aspect-square w-36 items-center justify-center rounded-full border-[20px] border-solid  bg-white border-[${playerTypes[cpu]?.firstColor}]`}
             >
               {playerTypes[cpu]?.svg}
             </span>
@@ -161,19 +172,19 @@ export default function GamePage() {
       )}
       <div className="flex flex-row items-center justify-between">
         <button
-          className="border-spacing-1 rounded-md border border-solid p-2 px-4 text-base font-semibold uppercase text-white"
+          className="border-spacing-1 rounded-md border border-solid p-2 px-4 text-base font-semibold uppercase text-white md:px-10 md:text-xl"
           onClick={() => setGameMode("easy")}
         >
           Easy
         </button>
         <button
-          className="border-spacing-1 rounded-md border border-solid p-2 px-4 text-base font-semibold uppercase text-white"
+          className="border-spacing-1 rounded-md border border-solid p-2 px-4 text-base font-semibold uppercase text-white md:px-10 md:text-xl"
           onClick={() => setGameMode("hard")}
         >
           Hard
         </button>
         <button
-          className="border-spacing-1 rounded-md border border-solid p-2 px-4 text-base font-semibold uppercase text-white"
+          className="border-spacing-1 rounded-md border border-solid p-2 px-4 text-base font-semibold uppercase text-white md:px-10 md:text-xl"
           onClick={() => setIsModalOpend(true)}
         >
           Rules

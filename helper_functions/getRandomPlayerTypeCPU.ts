@@ -1,7 +1,13 @@
 import { playerTypes } from "@/lib/gameInfo";
 
-export const getRandomPlayerTypeCPU = (userSelection: string) => {
-  const objectKeys = Object.keys(playerTypes);
+export const getRandomPlayerTypeCPU = (
+  userSelection: string,
+  gameMode: string,
+) => {
+  const objectKeys =
+    gameMode === "easy"
+      ? Object.keys(playerTypes).slice(0, 3)
+      : Object.keys(playerTypes);
 
   const filteredKeys = objectKeys.filter((key) => key !== userSelection);
   console.log(filteredKeys, "filteredKeys");
