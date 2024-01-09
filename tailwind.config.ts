@@ -8,7 +8,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      color: {
+      colors: {
         scissorsFirst: "#EC9E0E",
         scissorsSecond: "#ECA922",
         paperFirst: "#4865F4",

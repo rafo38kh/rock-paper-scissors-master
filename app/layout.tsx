@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${barlow.className} min-h-screen bg-gradient-to-b from-[#1F3756] to-[#141539] bg-cover bg-no-repeat`}
+        className={`${barlow.className} from-radialFirst to-radialSecond min-h-screen bg-gradient-to-b bg-cover bg-no-repeat`}
       >
         <GameContextProvider>{children}</GameContextProvider>
       </body>

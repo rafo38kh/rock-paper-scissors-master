@@ -16,10 +16,10 @@ export default function Button({
     <button
       type="button"
       onClick={() => handlePlayerSelection(playerType)}
-      className={`flex aspect-square w-32 items-center justify-center rounded-full border-[20px] border-solid  bg-white md:w-48 border-[${playerTypes[playerType].firstColor}] ${className}`}
+      className={`flex aspect-square w-32 items-center justify-center rounded-full border-[20px] border-solid  bg-white md:w-48 border-[${playerTypes[playerType]?.firstColor}] ${className}`}
       //   onClick={handlePlayerSelection}
     >
-      {playerTypes[playerType].svg}
+      {playerTypes[playerType]?.svg}
     </button>
   );
 }

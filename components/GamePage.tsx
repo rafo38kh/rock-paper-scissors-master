@@ -54,6 +54,8 @@ export default function GamePage() {
     setWinner(null);
   };
 
+  console.log("object info", playerTypes[player]?.firstColor);
+
   return (
     <div className="m-auto flex h-screen max-w-[43.75rem] flex-col justify-between p-8">
       <Score />
@@ -114,7 +116,7 @@ export default function GamePage() {
               </span>
             )}
             {winner && winner === "cpu" && (
-              <span className="text-[56px] font-bold uppercase text-white">
+              <span className="text-[56px] font-bold  uppercase text-white">
                 you lose
               </span>
             )}
