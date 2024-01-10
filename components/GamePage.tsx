@@ -5,14 +5,12 @@ import { GameContext } from "@/contexts/GameContextProvider";
 
 import { checkWinner } from "@/helper_functions/checkWinner";
 import { getRandomPlayerTypeCPU } from "@/helper_functions/getRandomPlayerTypeCPU";
-// import generateWord from "@/helper_functions/generateWord";
 
 import Modal from "./Modal";
 import Score from "./Score";
 
 import { playerTypes } from "@/lib/gameInfo";
 import Button from "./Button";
-// import { Span } from "next/dist/trace";
 
 export default function GamePage() {
   const {
@@ -29,7 +27,6 @@ export default function GamePage() {
     setIsModalOpend,
   } = useContext(GameContext);
 
-  // console.log(generateWord("rock"));
   useEffect(() => {
     if (player) {
       setTimeout(() => {

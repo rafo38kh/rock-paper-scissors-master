@@ -22,7 +22,6 @@ export default function Button({
       onClick={() => handlePlayerSelection(playerType)}
       style={{ borderColor: playerTypes[playerType]?.firstColor }}
       className={`col-span-2 w-full rounded-xl border-[6px] border-solid md:border-[15px] ${className} ${player} disabled:opacity-50 hover:disabled:cursor-not-allowed`}
-      // className={`aspect-auto w-32 rounded-xl border-[6px] border-solid md:w-52 md:border-[15px] ${className} ${player} disabled:opacity-50 hover:disabled:cursor-not-allowed`}
     >
       <div
         className={`flex h-full w-full items-center justify-center rounded-md bg-white p-2`}
