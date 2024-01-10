@@ -16,11 +16,14 @@ This is a solution to the [Rock Paper Scissors Challenge on Frontend Mentor](htt
 
 ### The challenge
 
-- {CHALLANGE}
+- View the optimal layout for the game depending on their device's screen size
+- Play Rock, Paper, Scissors against the computer
+- **Bonus**: Maintain the state of the score after refreshing the browser
+- **Bonus**: Play Rock, Paper, Scissors, Lizard, Spock against the computer
 
 ### Screenshot
 
-![screenshot](./images/screenshot.png)
+![screenshot](./public/screenshot.png)
 
 ### Links
 
@@ -31,10 +34,9 @@ This is a solution to the [Rock Paper Scissors Challenge on Frontend Mentor](htt
 
 ### Built with
 
-- Semantic HTML5 markup
-- SCSS custom properties
-- CSS Flexbox
-- Mobile-first workflow
+- NextJS
+- TypeScript
+- Tailwind
 
 ## Author
 

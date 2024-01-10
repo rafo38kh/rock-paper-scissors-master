@@ -66,7 +66,7 @@ export default function GamePage() {
     <div className="m-auto flex min-h-screen max-w-[45.75rem] flex-col justify-between p-8">
       <Score />
 
-      <div className=" my-12 grid grid-cols-6 gap-4 md:mt-12 md:max-w-[42rem]">
+      <div className="my-12 grid grid-cols-6 gap-4 md:mt-12 md:max-w-[42rem]">
         {gameMode === "easy"
           ? Object.keys(playerTypes)
               .slice(0, 3)
@@ -96,9 +96,19 @@ export default function GamePage() {
           {player ? (
             <span
               style={{ borderColor: playerTypes[player]?.firstColor }}
-              className={`flex aspect-square w-36 items-center justify-center rounded-full border-[20px]  border-solid  bg-white`}
+              className={`relative flex aspect-square w-36 items-center justify-center rounded-full border-[20px]  border-solid  bg-white`}
             >
               {playerTypes[player]?.svg}
+
+              {winner === "user" && (
+                <div className="absolute -z-50 flex items-center justify-center opacity-25">
+                  <div className="absolute h-40 w-40 rounded-full bg-gray-300/55 shadow-2xl"></div>
+                  <div className="absolute h-60 w-60 rounded-full bg-gray-300/45 shadow-2xl"></div>
+                  <div className="absolute h-80 w-80 rounded-full bg-gray-300/35 shadow-2xl"></div>
+                  <div className="h-100 w-100 absolute rounded-full bg-gray-300/25 shadow-2xl"></div>
+                  <div className="h-120 w-120 absolute rounded-full bg-gray-300/15 shadow-2xl"></div>
+                </div>
+              )}
             </span>
           ) : (
             <span className="aspect-square w-36 rounded-full bg-radialSecond"></span>
@@ -109,7 +119,11 @@ export default function GamePage() {
           </span>
         </div>
 
-        <div className="col-span-2 flex flex-col items-center justify-center gap-2">
+        <div
+          className={`col-span-2 flex flex-col items-center justify-center gap-2 ${
+            winner && "mb-8"
+          }`}
+        >
           {winner && winner === "user" && (
             <span className="text-[56px] font-bold uppercase text-white">
               you win
@@ -137,9 +151,19 @@ export default function GamePage() {
           {cpu ? (
             <span
               style={{ borderColor: playerTypes[cpu]?.firstColor }}
-              className={`flex aspect-square w-36 items-center justify-center rounded-full border-[20px] border-solid  bg-white `}
+              className={`relative flex aspect-square w-36 items-center justify-center rounded-full border-[20px] border-solid  bg-white `}
             >
               {playerTypes[cpu]?.svg}
+
+              {winner === "cpu" && (
+                <div className="absolute -z-50 flex items-center justify-center opacity-25">
+                  <div className="absolute h-40 w-40 rounded-full bg-gray-300/55 shadow-2xl"></div>
+                  <div className="absolute h-60 w-60 rounded-full bg-gray-300/45 shadow-2xl"></div>
+                  <div className="absolute h-80 w-80 rounded-full bg-gray-300/35 shadow-2xl"></div>
+                  <div className="h-100 w-100 absolute rounded-full bg-gray-300/25 shadow-2xl"></div>
+                  <div className="h-120 w-120 absolute rounded-full bg-gray-300/15 shadow-2xl"></div>
+                </div>
+              )}
             </span>
           ) : (
             <span className="aspect-square w-36 rounded-full bg-radialSecond"></span>
