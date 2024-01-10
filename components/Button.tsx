@@ -1,10 +1,11 @@
+import { GameContext } from "@/contexts/GameContextProvider";
 import { playerTypes } from "@/lib/gameInfo";
+import { useContext } from "react";
 
 type ButtonProps = {
   playerType: string;
   className?: string | null;
   handlePlayerSelection: (player: string) => void;
-  //   handlePlayerSelection: Dispatch<SetStateAction<string>>;
 };
 
 export default function Button({
@@ -12,14 +13,22 @@ export default function Button({
   playerType,
   handlePlayerSelection,
 }: ButtonProps) {
+  const { cpu, player } = useContext(GameContext);
+
   return (
     <button
       type="button"
+      disabled={!!(cpu || player)}
       onClick={() => handlePlayerSelection(playerType)}
-      className={`flex aspect-square w-32 items-center justify-center rounded-full border-[20px] border-solid  bg-white md:w-48 border-[${playerTypes[playerType]?.firstColor}] ${className}`}
-      //   onClick={handlePlayerSelection}
+      style={{ borderColor: playerTypes[playerType]?.firstColor }}
+      className={`col-span-2 w-full rounded-xl border-[6px] border-solid md:border-[15px] ${className} ${player} disabled:opacity-50 hover:disabled:cursor-not-allowed`}
+      // className={`aspect-auto w-32 rounded-xl border-[6px] border-solid md:w-52 md:border-[15px] ${className} ${player} disabled:opacity-50 hover:disabled:cursor-not-allowed`}
     >
-      {playerTypes[playerType]?.svg}
+      <div
+        className={`flex h-full w-full items-center justify-center rounded-md bg-white p-2`}
+      >
+        {playerTypes[playerType]?.svg}
+      </div>
     </button>
   );
 }

@@ -5,12 +5,14 @@ import { GameContext } from "@/contexts/GameContextProvider";
 
 import { checkWinner } from "@/helper_functions/checkWinner";
 import { getRandomPlayerTypeCPU } from "@/helper_functions/getRandomPlayerTypeCPU";
+// import generateWord from "@/helper_functions/generateWord";
 
 import Modal from "./Modal";
 import Score from "./Score";
 
 import { playerTypes } from "@/lib/gameInfo";
 import Button from "./Button";
+// import { Span } from "next/dist/trace";
 
 export default function GamePage() {
   const {
@@ -27,6 +29,7 @@ export default function GamePage() {
     setIsModalOpend,
   } = useContext(GameContext);
 
+  // console.log(generateWord("rock"));
   useEffect(() => {
     if (player) {
       setTimeout(() => {
@@ -35,7 +38,15 @@ export default function GamePage() {
         const winner = checkWinner(player, cpuType);
 
         if (winner === "user") {
-          setScore((prevState) => prevState + 1);
+          setScore((prevState) => ({
+            ...prevState,
+            playerScore: prevState.playerScore + 1,
+          }));
+        } else {
+          setScore((prevState) => ({
+            ...prevState,
+            cpuScore: prevState.cpuScore + 1,
+          }));
         }
 
         setCpu(cpuType);
@@ -54,102 +65,111 @@ export default function GamePage() {
     setWinner(null);
   };
 
-  console.log("object info", playerTypes[player]?.firstColor);
-
   return (
-    <div className="m-auto flex h-screen max-w-[43.75rem] flex-col justify-between p-8">
+    <div className="m-auto flex min-h-screen max-w-[45.75rem] flex-col justify-between p-8">
       <Score />
 
-      {!player ? (
-        <div>
-          {gameMode === "easy" ? (
-            <div className="m-auto grid max-w-96 grid-cols-2 grid-rows-2 place-items-center gap-3 md:max-w-[30rem]">
-              {Object.keys(playerTypes)
-                .slice(0, 3)
-                .map((playerType) => (
-                  <Button
-                    key={playerType}
-                    playerType={playerType}
-                    handlePlayerSelection={handlePlayerSelection}
-                    className={playerType === "rock" ? "col-span-2" : null}
-                  />
-                ))}
-            </div>
-          ) : gameMode === "hard" ? (
-            <div className="m-auto  grid max-w-96 grid-cols-2 grid-rows-3 place-items-center gap-8 md:max-w-[30rem]">
-              {Object.keys(playerTypes).map((playerType) => (
+      <div className=" my-12 grid grid-cols-6 gap-4 md:mt-12 md:max-w-[42rem]">
+        {gameMode === "easy"
+          ? Object.keys(playerTypes)
+              .slice(0, 3)
+              .map((playerType) => (
                 <Button
                   key={playerType}
                   playerType={playerType}
                   handlePlayerSelection={handlePlayerSelection}
-                  className={`${
-                    playerType === "paper"
-                      ? "col-span-2 justify-self-center"
-                      : null
-                  } ${
-                    playerType === "scissors" || playerType === "lizard"
-                      ? "justify-self-start"
-                      : "justify-self-end"
-                  }`}
                 />
-              ))}
-            </div>
-          ) : null}
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 grid-rows-2">
-          <div className="flex flex-col items-center justify-start gap-2">
+              ))
+          : Object.keys(playerTypes).map((playerType) => (
+              <Button
+                key={playerType}
+                playerType={playerType}
+                handlePlayerSelection={handlePlayerSelection}
+                className={
+                  playerType === "spock" || playerType === "lizard"
+                    ? "col-span-3"
+                    : null
+                }
+              />
+            ))}
+      </div>
+
+      <div className="grid grid-cols-2 grid-rows-2">
+        <div className="flex flex-col items-center justify-start gap-2">
+          {player ? (
             <span
-              className={`flex aspect-square items-center justify-center rounded-full border-[20px] border-solid  bg-white border-[${playerTypes[player]?.firstColor}] w-36`}
+              style={{ borderColor: playerTypes[player]?.firstColor }}
+              className={`flex aspect-square w-36 items-center justify-center rounded-full border-[20px]  border-solid  bg-white`}
             >
               {playerTypes[player]?.svg}
             </span>
-            <span className="text-sm font-bold uppercase text-white">
-              You picked
+          ) : (
+            <span className="aspect-square w-36 rounded-full bg-radialSecond"></span>
+          )}
+
+          <span className="text-sm font-bold uppercase text-white">
+            You picked
+          </span>
+        </div>
+
+        <div className="col-span-2 flex flex-col items-center justify-center gap-2">
+          {winner && winner === "user" && (
+            <span className="text-[56px] font-bold uppercase text-white">
+              you win
             </span>
-          </div>
+          )}
+          {winner && winner === "cpu" && (
+            <span className="text-[56px] font-bold  uppercase text-white">
+              you lose
+            </span>
+          )}
+          <button
+            disabled={!cpu && !player}
+            onClick={() => handleResetButton()}
+            className={`rounded-md bg-white px-16 py-4 text-base font-semibold uppercase tracking-[0.2em] ${
+              !cpu && !player
+                ? "disabled:opacity-50 hover:disabled:cursor-not-allowed"
+                : null
+            }`}
+          >
+            play again
+          </button>
+        </div>
 
-          <div className="col-span-2 flex flex-col items-center justify-center gap-2">
-            {winner && winner === "user" && (
-              <span className="text-[56px] font-bold uppercase text-white">
-                you win
-              </span>
-            )}
-            {winner && winner === "cpu" && (
-              <span className="text-[56px] font-bold  uppercase text-white">
-                you lose
-              </span>
-            )}
-            <button
-              className="rounded-md bg-white px-16 py-4 text-base font-semibold uppercase tracking-[0.2em]"
-              onClick={() => handleResetButton()}
-            >
-              play again
-            </button>
-          </div>
-
-          <div className="col-start-2 row-start-1 flex flex-col items-center justify-start gap-2">
+        <div className="col-start-2 row-start-1 flex flex-col items-center justify-start gap-2">
+          {cpu ? (
             <span
-              className={`flex aspect-square w-36 items-center justify-center rounded-full border-[20px] border-solid  bg-white border-[${playerTypes[cpu]?.firstColor}]`}
+              style={{ borderColor: playerTypes[cpu]?.firstColor }}
+              className={`flex aspect-square w-36 items-center justify-center rounded-full border-[20px] border-solid  bg-white `}
             >
               {playerTypes[cpu]?.svg}
             </span>
-            <span className="text-sm font-bold uppercase text-white">
-              The house picked
-            </span>
-          </div>
+          ) : (
+            <span className="aspect-square w-36 rounded-full bg-radialSecond"></span>
+          )}
+
+          <span className="text-sm font-bold uppercase text-white">
+            The house picked
+          </span>
         </div>
-      )}
+      </div>
+
       <div className="flex flex-row items-center justify-between">
         <button
           className="border-spacing-1 rounded-md border border-solid p-2 px-4 text-base font-semibold uppercase text-white md:px-10 md:text-xl"
-          onClick={() => setGameMode("easy")}
+          onClick={() => {
+            setGameMode("easy");
+            handleResetButton();
+          }}
         >
           Easy
         </button>
         <button
           className="border-spacing-1 rounded-md border border-solid p-2 px-4 text-base font-semibold uppercase text-white md:px-10 md:text-xl"
-          onClick={() => setGameMode("hard")}
+          onClick={() => {
+            setGameMode("hard");
+            handleResetButton();
+          }}
         >
           Hard
         </button>

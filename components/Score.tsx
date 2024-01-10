@@ -1,31 +1,52 @@
 import React, { useContext } from "react";
 
-import Image from "next/image";
-
 import { GameContext } from "@/contexts/GameContextProvider";
 
-import easyIcon from "@/public/images/logo.svg";
-import hardIcon from "@/public/images/logo-bonus.svg";
+import Word from "./Word";
 
 export default function Score() {
   const { gameMode, score } = useContext(GameContext);
 
   return (
-    <div className="border-headerOutline flex items-center justify-between rounded-md border-[3px] border-solid p-3">
-      <div className="h-full">
-        {gameMode === "easy" ? (
-          <Image src={easyIcon} alt="Icon" layout="responsive" />
-        ) : (
-          <Image src={hardIcon} alt="Icon" layout="responsive" />
-        )}
+    <div className="flex h-full w-full flex-col justify-between gap-4 rounded-md border-[3px] border-solid border-headerOutline p-3 md:flex-row">
+      <div className="flex w-full flex-col items-center justify-center rounded-md bg-white px-6 py-3 md:px-12">
+        <span className="text-lg font-semibold uppercase tracking-widest text-scoreText md:text-xl">
+          Player
+        </span>
+        <span className="text-4xl font-bold text-darkText md:text-[56px]">
+          {score.playerScore}
+        </span>
       </div>
 
-      <div className="flex h-full flex-col items-center justify-center rounded-md bg-white px-6 py-3 md:px-12">
-        <span className="text-scoreText text-[.625rem] font-semibold uppercase tracking-widest md:text-sm">
-          Score
+      <ul className="m-auto flex flex-col">
+        <div className="flex justify-between gap-4">
+          <Word input="rock" />
+        </div>
+
+        <div className="flex justify-between gap-4">
+          <Word input="paper" />
+        </div>
+        <div className="flex justify-between gap-4">
+          <Word input="scissors" />
+        </div>
+        {gameMode === "hard" && (
+          <>
+            <div className="flex justify-between gap-4">
+              <Word input="spock" />
+            </div>
+            <div className="flex justify-between gap-4">
+              <Word input="lizard" />
+            </div>
+          </>
+        )}
+      </ul>
+
+      <div className="flex w-full flex-col items-center justify-center rounded-md bg-white px-6 py-3 md:px-12">
+        <span className="text-lg font-semibold uppercase tracking-widest text-scoreText md:text-xl">
+          CPU
         </span>
-        <span className="text-darkText text-4xl font-bold md:text-[46px]">
-          {score}
+        <span className="text-4xl font-bold text-darkText md:text-[56px]">
+          {score.cpuScore}
         </span>
       </div>
     </div>
