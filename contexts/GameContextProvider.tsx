@@ -38,8 +38,16 @@ type GameContext = {
   setWinner: Dispatch<SetStateAction<"user" | "cpu" | null>>;
   isModalOpend: true | false;
   setIsModalOpend: Dispatch<SetStateAction<true | false>>;
-  score: number;
-  setScore: Dispatch<SetStateAction<number>>;
+  score: {
+    playerScore: number;
+    cpuScore: number;
+  };
+  setScore: Dispatch<
+    SetStateAction<{
+      playerScore: number;
+      cpuScore: number;
+    }>
+  >;
 };
 
 export const GameContext = createContext<GameContext>({
@@ -53,7 +61,10 @@ export const GameContext = createContext<GameContext>({
   setWinner: () => {},
   isModalOpend: false,
   setIsModalOpend: () => {},
-  score: 0,
+  score: {
+    playerScore: 0,
+    cpuScore: 0,
+  },
   setScore: () => {},
 });
 
@@ -65,7 +76,10 @@ const GameContextProvider = ({ children }: GameContextProviderProps) => {
   const [gameMode, setGameMode] = useState<"easy" | "hard">("easy");
   const [winner, setWinner] = useState<"user" | "cpu" | null>(null);
   const [isModalOpend, setIsModalOpend] = useState(Boolean);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState({
+    playerScore: 0,
+    cpuScore: 0,
+  });
 
   const value = useMemo(
     () => ({
@@ -95,7 +109,7 @@ const GameContextProvider = ({ children }: GameContextProviderProps) => {
       setIsModalOpend,
       score,
       setScore,
-    ]
+    ],
   );
 
   return (
